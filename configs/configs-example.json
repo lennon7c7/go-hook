@@ -1,0 +1,50 @@
+{
+  "GinMode": "release",
+  "AutoReload": false,
+  "ShowSwagger": false,
+  "Domain": {
+    "Api": "",
+    "H5": "",
+    "Backend": ""
+  },
+  "Http": {
+    "Port": 31051
+  },
+  "Https": {
+    "On": true,
+    "Port": 443,
+    "Host": "localhost"
+  },
+  "DB": {
+    "DriverName": "mysql",
+    "DataSourceName": "root:root@tcp(127.0.0.1:3306)/go-hook?charset=utf8mb4&parseTime=True&loc=Local",
+    "ShowSQL": false,
+    "SQLLogFile": "sql.log"
+  },
+  "File": {
+    "WebUploadRoot": "${currentDir}/upload",
+    "WebRelativePath": "/upload"
+  },
+  "Static": {
+  },
+  "Openai": {
+    "ApiKey": "sk-xxx"
+  },
+  "JWT": {
+    "SkipPaths": [
+      "/queue",
+      "/ping",
+      "/static",
+      "/swagger",
+      "/doc.json",
+      "/user/login"
+    ],
+    "AccessTokenExpires": 6048000,
+    "RefreshTokenExpires": 25920000,
+    "PrivateKey": "xxx",
+    "PublicKey": "xxx"
+  },
+  "Casbin": {
+    "Model": "[request_definition]\nr = sub, obj, act\n\n[policy_definition]\np = sub, obj, act\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act"
+  }
+}

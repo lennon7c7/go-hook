@@ -53,8 +53,10 @@ class GoHook {
                 })
         })
 
+        let i = 0
+        that.deleteAllCookie()
         while (true) {
-            await that.sleepSecond(3);
+            await that.sleepSecond(10);
 
             console.log(59);
             var settings = {
@@ -72,13 +74,17 @@ class GoHook {
             console.log(90, reqPrompt);
             $('[form="input-form"]').click()
             while (true) {
-                await that.sleepSecond(1);
+                await that.sleepSecond(5);
                 if (resOutput.length > 0) {
                     break
                 }
             }
 
             console.log('end', resOutput)
+            i++
+            if (i >= 5) {
+                that.deleteAllCookie()
+            }
 
             // $('#prompt').val('tiger')
             // await that.sleepSecond(1);
@@ -233,6 +239,28 @@ class GoHook {
             }
         }
         return '';
+    }
+
+    /**
+     * 清除所有的cookie
+     */
+    deleteAllCookie() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        }
+        if (cookies.length > 0) {
+            for (i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                var domain = location.host.substr(location.host.indexOf('.'));
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=" + domain;
+            }
+        }
     }
 
     md5(string) {
